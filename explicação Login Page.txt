@@ -1,0 +1,42 @@
+
+noteId: "b5d321508fc711edafba31bd04b8bb0e"
+tags: []
+
+
+Explicação Login Page  
+
+ Uma classe LoginPage que estende a classe StatefulWidget e define o formulário de login com dois campos de texto para o email e a senha, e 
+ um widget RaisedButton para enviar o formulário. A classe _LoginPageState, que estende State<LoginPage>, contém a chave de formulário 
+ e as variáveis de email e senha, e sobrescreve o método build para renderizar o formulário.
+
+Uma classe MyApp que estende a classe StatelessWidget e define a raiz da árvore de widgets e a estrutura e o comportamento visual do
+ aplicativo. Ele tem um título e uma propriedade home, e define a LoginPage como a página inicial.
+
+Uma função signUp que recebe o email e a senha como argumentos e os usa para cadastrar um novo usuário com o Firebase Auth. Ela também
+ adiciona o email do usuário a uma coleção no Firestore.
+
+Uma função main que inicializa o Firebase e executa o aplicativo. Ela chama a função WidgetsFlutterBinding.ensureInitialized para garantir 
+que o vínculo de widgets está inicializado, e em seguida inicializa o Firebase com o método Firebase.initializeApp. Por fim, ela executa o 
+aplicativo com a função runApp e passa o widget MyApp como raiz da árvore de widgets.
+
+
+
+
+
+
+
+
+
+A LoginPage class that extends the StatefulWidget class and defines the login form with two text fields for the email and password, and 
+a RaisedButton widget to submit the form. The _LoginPageState class, which extends State<LoginPage>, contains the form key and the email
+ and password variables, and overrides the build method to render the form.
+
+A MyApp class that extends the StatelessWidget class and defines the root of the widget tree and the visual structure and behavior of the 
+app. It has a title and a home property, and sets the LoginPage as the home page.
+
+A signUp function that takes the email and password as arguments, and uses them to sign up a new user with Firebase Auth. It also adds the
+ user's email to a collection in Firestore.
+
+A main function that initializes Firebase and runs the app. It calls the WidgetsFlutterBinding.ensureInitialized function to ensure that 
+the Widgets binding is initialized, and then initializes Firebase with the Firebase.initializeApp method. Finally, it runs the app with 
+the runApp function and passes the MyApp widget as the root of the widget tree.
