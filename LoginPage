@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,28 +13,34 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Flutter Login'),
+        backgroundColor: Color(0xff000000),
+        title: Text('Página de Login', style: TextStyle(color: Colors.white)),
       ),
       body: Form(
         key: _formKey,
         child: Column(
           children: [
             TextFormField(
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Color(0xff000000))),
               validator: (value) {
-                if (value == null || !EmailValidator.validate(value)) {
-                  return 'Please enter a valid email';
+                if (value != null && value.isEmpty) {
+                  return 'Insira seu email';
                 }
                 return null;
               },
               onSaved: (value) => _email = value ?? '',
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: 'Password'),
+              decoration: InputDecoration(
+                  labelText: 'Senha',
+                  labelStyle: TextStyle(color: Color(0xff000000))),
               validator: (value) {
                 if (value != null && value.isEmpty) {
-                  return 'Please enter your password';
+                  return 'Insira sua Senha';
                 }
                 return null;
               },
@@ -45,13 +48,37 @@ class _LoginPageState extends State<LoginPage> {
               obscureText: true,
             ),
             RaisedButton(
-              onPressed: () async {
-                if (_formKey.currentState.validate()) {
-                  _formKey.currentState.save();
-                  await signUp(_email, _password);
+              color: Colors.black,
+              child: Text('Enviar', style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                if (_formKey.currentState?.validate() == true) {
+                  _formKey.currentState?.save();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WelcomeBackPage(),
+                    ),
+                  );
                 }
               },
-              child: Text('Submit'),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 20),
+              child: Text("Não possue uma conta ainda? ",
+                  style: TextStyle(color: Color(0xff070707), fontSize: 12)),
+            ),
+            RaisedButton(
+              color: Colors.black,
+              child: Text('Inscreva-se Agora',
+                  style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SignupPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -60,29 +87,118 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class MyApp extends StatelessWidget {
+class WelcomeBackPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Login',
-      home: LoginPage(),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Container(),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text('Bem Vindo de Volta!',
+                style: TextStyle(fontSize: 30, color: Color(0xff000000))),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          RaisedButton(
+            color: Colors.black,
+            child: Text('Voltar a Página de Login',
+                style: TextStyle(color: Colors.white)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
     );
   }
 }
 
-Future<void> signUp(String email, String password) async {
-  final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    email: email,
-    password: password,
+void main() {
+  runApp(
+    MaterialApp(
+      home: LoginPage(),
+    ),
   );
-  final user = authResult.user;
-  await Firestore.instance.collection('users').document(user.uid).setData({
-    'email': email,
-  });
 }
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+class SignupPage extends StatefulWidget {
+  @override
+  _SignupPageState createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
+  final _formKey = GlobalKey<FormState>();
+  String _email = '';
+  String _password = '';
+  String _confirmPassword = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Color(0xff000000),
+          title:
+              Text('Página de Cadastro', style: TextStyle(color: Colors.white)),
+        ),
+        body: Form(
+            key: _formKey,
+            child: Column(children: [
+              TextFormField(
+                decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Color(0xff000000))),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Insira seu email';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _email = value ?? '',
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                    labelText: 'Senha',
+                    labelStyle: TextStyle(color: Color(0xff000000))),
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return 'Insira sua senha';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _password = value ?? '',
+                obscureText: true,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                    labelText: 'Confirme sua senha',
+                    labelStyle: TextStyle(color: Color(0xff000000))),
+                validator: (value) {},
+                onSaved: (value) => _confirmPassword = value ?? '',
+                obscureText: true,
+              ),
+              RaisedButton(
+                color: Colors.black,
+                child: Text('Registrar', style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  if (_formKey.currentState?.validate() == true) {
+                    _formKey.currentState?.save();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                    );
+                  }
+                },
+              ),
+            ])));
+  }
 }
