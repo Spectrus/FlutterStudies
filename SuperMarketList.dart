@@ -99,3 +99,123 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: InputDec
             )
           )
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          VERSÃO SEM FIREBASE
+          
+          import 'package:flutter/material.dart';
+
+class SupermarketList extends StatefulWidget {
+  @override
+  _SupermarketListState createState() => _SupermarketListState();
+}
+
+class _SupermarketListState extends State<SupermarketList> {
+  final List<String> _items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lista de Supermercado'),
+      ),
+      body: ListView.builder(
+        itemCount: _items.length,
+        itemBuilder: (context, index) {
+          final item = _items[index];
+          return ListTile(
+            title: Text(
+              item,
+              style: TextStyle(decoration: TextDecoration.lineThrough),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.check_box),
+                  onPressed: () {
+                    setState(() {
+                      _items[index] = item;
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      _items.removeAt(index);
+                    });
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Add Item'),
+                content: TextField(
+                  onSubmitted: (value) {
+                    setState(() {
+                      _items.add(value);
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Add'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+          
+          
+          
+          
+          
+          
+          
+          
+        
