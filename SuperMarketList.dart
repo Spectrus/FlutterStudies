@@ -129,7 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
           VERSÃO SEM FIREBASE
           
           import 'package:flutter/material.dart';
-
+void main() {
+  runApp(SupermarketList());
+}
 class SupermarketList extends StatefulWidget {
   @override
   _SupermarketListState createState() => _SupermarketListState();
