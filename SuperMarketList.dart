@@ -217,6 +217,114 @@ class _SupermarketListState extends State<SupermarketList> {
           
           
           
+          VERSÃO 2
+          
+          
+          import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Lista de Supermercado',
+      home: SupermarketList(),
+    );
+  }
+}
+
+class SupermarketList extends StatefulWidget {
+  @override
+  _SupermarketListState createState() => _SupermarketListState();
+}
+
+class _SupermarketListState extends State<SupermarketList> {
+  final List<Map<String, dynamic>> _items = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lista de Supermercado'),
+      ),
+      body: ListView.builder(
+        itemCount: _items.length,
+        itemBuilder: (context, index) {
+          final item = _items[index];
+          return ListTile(
+            title: Text(
+              item['name'],
+              style: TextStyle(
+                decoration: item['isCompleted']
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+              ),
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.check_box),
+                  onPressed: () {
+                    setState(() {
+                      _items[index]['isCompleted'] =
+                          !_items[index]['isCompleted'];
+                    });
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    setState(() {
+                      _items.removeAt(index);
+                    });
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              String itemName = "";
+              return AlertDialog(
+                title: Text('Adicionar Produto'),
+                content: TextField(
+                  onChanged: (value) {
+                    itemName = value;
+                  },
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Adicionar'),
+                    onPressed: () {
+                      setState(() {
+                        _items.add({'name': itemName, 'isCompleted': false});
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+          
+          
+          
           
           
           
